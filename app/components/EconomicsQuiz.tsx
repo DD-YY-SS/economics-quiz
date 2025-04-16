@@ -1,11 +1,11 @@
+
 "use client";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 
-const quizData = [
-  { question: "1. 가격이 상승하면 공급이 증가하므로 수요도 자동적으로 증가하게 된다.", type: "TF", answer: "F", explanation: "가격이 상승한다고 해서 수요가 자동적으로 증가하는 건 아님. 오히려 일반적으로는 수요는 감소함." },
+const quizData = [{ question: "1. 가격이 상승하면 공급이 증가하므로 수요도 자동적으로 증가하게 된다.", type: "TF", answer: "F", explanation: "가격이 상승한다고 해서 수요가 자동적으로 증가하는 건 아님. 오히려 일반적으로는 수요는 감소함." },
   { question: "2. 가격이 하락했는데도 수요량이 줄었다면, 이는 해당 재화가 열등재일 가능성이 있다.", type: "TF", answer: "T", explanation: "열등재는 소득이 증가할 때 수요가 감소하는데, 가격 하락이 수요 감소로 이어진다면 다른 요인이 작용 중임." },
   { question: "3. 가격탄력성이 1보다 크면, 가격이 오를 때 총수입은 감소한다.", type: "TF", answer: "T", explanation: "탄력성이 1보다 크면 총수입은 가격 인상 시 줄어듦. (TR = P×Q 공식에서 확인 가능)" },
   { question: "4. 정부가 보조금을 지급하면 공급곡선이 왼쪽으로 이동한다.", type: "TF", answer: "F", explanation: "보조금은 공급자의 생산비용을 줄여 공급곡선을 오른쪽으로 이동시킴." },
@@ -76,6 +76,18 @@ export default function EconomicsQuiz() {
             placeholder="정답을 입력하세요 (예: T / F / 숫자)"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (showExplanation) {
+                  setShowExplanation(false);
+                  setStep(step + 1);
+                  setAttempt(0);
+                  setInput("");
+                } else {
+                  handleSubmit();
+                }
+              }
+            }}
           />
           <Button onClick={handleSubmit}>제출</Button>
           {showExplanation && (
