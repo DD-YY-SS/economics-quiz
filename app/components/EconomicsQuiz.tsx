@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
@@ -26,7 +25,6 @@ const quizData = [{ question: "1. 가격이 상승하면 공급이 증가하므�
   { question: "19. 수확체감의 법칙이 발생하는 이유는? (1~4)\n① 자원이 무한하기 때문\n② 투입량이 증가해도 산출량이 증가하지 않아서\n③ 고정요소에 비해 가변요소 투입이 과다해서\n④ 생산량이 기하급수적으로 증가해서", type: "MC", answer: "3", explanation: "수확체감 법칙은 가변요소를 너무 많이 투입할 때 생김 → 고정요소의 한계 때문에." },
   { question: "20. 경제학에서 \"보이지 않는 손\"이 의미하는 것은? (1~4)\n① 중앙은행의 시장 개입\n② 정부의 가격 규제\n③ 개인의 이기심이 시장 전체의 효율을 가져오는 현상\n④ 독점기업의 가격 조정", type: "MC", answer: "3", explanation: "보이지 않는 손은 시장에서 자원이 효율적으로 배분되도록 이끄는 개인 이기심의 결과임." }
 ];
-
 export default function EconomicsQuiz() {
   const [step, setStep] = useState(0);
   const [input, setInput] = useState("");
@@ -34,10 +32,23 @@ export default function EconomicsQuiz() {
   const [correctCount, setCorrectCount] = useState(0);
   const [saved, setSaved] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const current = quizData[step];
 
   const handleSubmit = () => {
+    const validInput =
+      current.type === "TF"
+        ? ["T", "F"].includes(input.toUpperCase())
+        : ["1", "2", "3", "4"].includes(input.trim());
+
+    if (!validInput) {
+      setErrorMessage("❗ 유효한 입력이 아닙니다. T / F 또는 1 ~ 4 중에서 입력해주세요.");
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
     if (input.toUpperCase() === current.answer) {
       setCorrectCount(correctCount + 1);
       setShowExplanation(false);
@@ -88,8 +99,12 @@ export default function EconomicsQuiz() {
                 }
               }
             }}
+            className={errorMessage ? "border-red-500" : ""}
           />
           <Button onClick={handleSubmit}>제출</Button>
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+          )}
           {showExplanation && (
             <div className="mt-4 bg-yellow-100 p-3 rounded-md">
               <p><strong>정답:</strong> {current.answer}</p>
