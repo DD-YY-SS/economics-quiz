@@ -32,6 +32,7 @@ export default function EconomicsQuiz() {
   const [input, setInput] = useState("");
   const [showExplanation, setShowExplanation] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [saved, setSaved] = useState(false);
   const [attempt, setAttempt] = useState(0);
 
   const current = quizData[step];
@@ -53,10 +54,15 @@ export default function EconomicsQuiz() {
   };
 
   if (step >= quizData.length) {
+    if (!saved) {
+      localStorage.setItem("lastScore", `${correctCount} / ${quizData.length}`);
+      setSaved(true);
+    }
     return (
       <div className="p-6 text-center">
         <h2 className="text-2xl font-bold mb-4">시험 완료!</h2>
         <p>점수: {correctCount} / {quizData.length}</p>
+        <p className="text-sm mt-2 text-gray-600">* 이 점수는 localStorage에 저장되었습니다.</p>
       </div>
     );
   }
