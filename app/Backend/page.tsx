@@ -1,4 +1,4 @@
-export default function BackEndPage() {
+export default function backend() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">백엔드 스터디</h2>
