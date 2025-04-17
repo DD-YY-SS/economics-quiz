@@ -1,6 +1,6 @@
 // app/backend/page.tsx
 
-export default function BackEnd() {
+export default function BackEndPage() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">백엔드 스터디</h2>
@@ -11,3 +11,4 @@ export default function BackEnd() {
     </div>
   );
 }
+  
