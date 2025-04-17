@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,3 +36,10 @@ export default function RootLayout({
     </html>
   );
 }
+<header className="bg-black text-white px-6 py-4 flex justify-between items-center">
+  <h1 className="text-lg font-bold">emoph1l.store</h1>
+  <nav className="space-x-4">
+    <Link href="/economics">경제학개론</Link>
+    <Link href="/backend">백엔드스터디</Link>
+  </nav>
+</header>
